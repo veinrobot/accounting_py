@@ -5,6 +5,7 @@ balance = 0
 
 # 創建一個交易紀錄字典，其中每筆交易包含金額、類型、時間
 transactions = []
+time_format = "%Y-%m-%d %H:%M:%S.%f"
 
 def save_transactions():
     with open("transactions.txt", "w") as file:
@@ -23,7 +24,9 @@ def load_transactions():
                 trans_type, trans_amount_str, trans_time_str = parts
                 try:
                     trans_amount = float(trans_amount_str)
-                    trans_time = datetime.datetime.strptime(trans_time_str, "%Y-%m-%d %H:%M:%S.%f")
+                    if not "." in trans_time_str:
+                        trans_time_str+=".0"
+                    trans_time = datetime.datetime.strptime(trans_time_str, time_format)
                     if trans_type == "支出":
                         balance -= trans_amount
                     else:
@@ -60,8 +63,10 @@ while True:
         if not transaction_time:
             transaction_time = datetime.datetime.now()
         else:
+            if not "." in transaction_time:
+                transaction_time+=".0"
             # 解析使用者輸入的時間
-            transaction_time = datetime.datetime.strptime(transaction_time, "%Y-%m-%d %H:%M:%S")
+            transaction_time = datetime.datetime.strptime(transaction_time, time_format)
        
         transactions.append({"type": "支出", "amount": -expense, "time": transaction_time})
         balance -= expense
@@ -72,7 +77,9 @@ while True:
         if not transaction_time:
             transaction_time = datetime.datetime.now().replace(microsecond=0)
         else:
-            transaction_time = datetime.datetime.strptime(transaction_time, "%Y-%m-%d %H:%M:%S")
+            if not "." in transaction_time:
+                transaction_time+=".0"
+            transaction_time = datetime.datetime.strptime(transaction_time, time_format)
         
         transactions.append({"type": "收入", "amount": income, "time": transaction_time})
         balance += income
@@ -96,7 +103,9 @@ while True:
             if not new_time:
                 new_time = edit_transaction['time']
             else:
-                new_time = datetime.datetime.strptime(new_time, "%Y-%m-%d %H:%M:%S")
+                if not "." in new_time:
+                    new_time+=".0"
+                new_time = datetime.datetime.strptime(new_time, time_format)
             
             balance -= edit_transaction['amount']
             balance += new_amount
