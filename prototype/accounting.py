@@ -35,8 +35,12 @@ def load_transactions():
         pass
 
 load_transactions()
-
+print("歡迎使用簡易記帳系統！")
+count = 0
 while True:
+    if count>0:
+        print("\n\n")
+    count+=1
     print("記帳程式")
     print("1. 新增支出")
     print("2. 新增收入")
@@ -76,6 +80,7 @@ while True:
     elif choice == "3":
         print(f"目前餘額: {balance}")
     elif choice == "4":
+        print("\n\n")
         print("交易紀錄:")
         for i, transaction in enumerate(transactions, start=1):
             print(f"{i}. 類型: {transaction['type']}, 金額: {abs(transaction['amount'])}, 時間: {transaction['time']}")
