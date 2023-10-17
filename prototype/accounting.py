@@ -50,9 +50,10 @@ while True:
     print("3. 顯示餘額")
     print("4. 顯示交易紀錄")
     print("5. 編輯交易")
-    print("6. 退出")
+    print("6. 刪除交易")
+    print("7. 退出")
     
-    choice = input("請選擇操作 (1/2/3/4/5/6): ")
+    choice = input("請選擇操作 (1/2/3/4/5/6/7): ")
     
     if choice == "1":
         expense = float(input("請輸入支出金額: "))
@@ -116,6 +117,14 @@ while True:
         else:
             print("無效的交易編號")
     elif choice == "6":
+        edit_choice = int(input("請輸入要刪除的交易編號: "))
+        if 1 <= edit_choice <= len(transactions):
+            balance -= transactions[edit_choice - 1]['amount']
+            transactions.pop(edit_choice - 1)
+            print(f"交易 {edit_choice} 已刪除")
+        else:
+            print("無效的交易編號")
+    elif choice == "7":
         save_transactions()
         print("感謝使用記帳程式，再見！")
         break
