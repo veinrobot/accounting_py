@@ -1,42 +1,174 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=dev-width" charset="UTF-8">
+
     <title>記帳</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style type = "text/css">
+
+        body{
+
+                height: 100%;
+
+                background-color:#03045E;
+
+        }
+
+        @media only screen and (max-width: 750px) {
+
+            .full_heiht{
+
+                height: 100%;
+
+            }
+
+        }
+
+    </style>
+
 </head>
+
 <body>
-    <h1>記帳</h1>
-    
-    <h2>新增記錄</h2>
-    <form action="{{ url_for('add_record') }}" method="post">
-        <label for="date">日期：</label>
-        <input type="date" id="date" name="date" required><br><br>
-        
-        <label for="amount">金額：</label>
-        <input type="number" id="amount" name="amount" required><br><br>
-        
-        <input type="submit" value="新增">
-    </form>
-    <br>
-    
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>日期</th>
-            <th>金額</th>
-            <th>操作</th>
-        </tr>
-        {% for record in records %}
-        <tr>
-            <td>{{ record.id }}</td>
-            <td>{{ record.date }}</td>
-            <td>{{ record.amount }}</td>
-            <td>
-                <a href="{{ url_for('edit_record', record_id=record.id) }}">編輯</a>
-                <a href="{{ url_for('delete_record', record_id=record.id) }}">刪除</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+
+    <div class="container">
+
+        <div class="row" style="height:10px;"></div>
+
+        <div class="row"> 
+
+            <spacel class="col-sm-1" ></spacel>
+
+            <bodytop class="col-sm-10" style="height: 50px;">
+
+                <headl class="col-sm-6" style="background-color: #023E8A; height: 100%;">
+
+                    <menu class="col-sm-4" style="background-color: #0096C7;  display: flex;align-items: center; color: white;height: 80%; margin-top: 5px;" > menu </menu>
+
+                </headl>
+
+                <s class="col-sm-1"></s>
+
+                <headr class="col-sm-4" style="background-color: #023E8A; height: 100%;">
+
+                    <sign-up class="col-sm-5" style=" display: flex;align-items: center; color:white;height: 80%; margin-top: 5px;">sign up</sign-up>
+
+                    <log-up class="col-sm-5" style=" display: flex;align-items: center; color:white; background-color:  #0096C7; height: 80%; margin-top: 5px;">log in</log-up>
+
+                </headr>
+
+            </bodytop>
+
+            <spacer class="col-sm-1"></spacer>
+
+        </div>
+
+        <div class="row" style="height:10px;"></div>
+
+        <div class="row">
+
+            <spacel class="col-sm-1" ></spacel>
+
+            <bodyin class="col-sm-10">
+
+                <b1 class="col-sm-12" style="background-color: #023E8A;text-align: center;">
+
+                    <form action="{{ url_for('add_record') }}" method="post">
+
+                        <label for="date" style="color:white">日期：</label>
+
+                        <input type="date" id="date" name="date" required><br><br>
+
+                        
+
+                        <label for="amount" style="color:white">金額：</label>
+
+                        <input type="number" id="amount" name="amount" required><br><br>
+
+                        
+
+                        <input type="submit"  value="新增" onclick="t1.style.display='block'">
+
+                        <button name="displaybutton" onclick="t1.style.display='block'" >顯示紀錄</button>
+
+                    </form>
+
+                </b1>
+
+            </bodyin>
+
+            <spacer class="col-sm-1"></spacer>
+
+        </div>
+
+        <div class="row" style="height:10px;"></div>
+
+        <div class="row">
+
+            <spacel class="col-sm-1" ></spacel>
+
+            <bodyin id="t1" class="col-sm-10" style="background-color: #023E8A; display:none;">
+
+                <spacer class="col-sm-3"></spacer>
+
+                <t1  class="col-sm-6" style="margin-left:auto; margin-right:auto;">
+
+                    <table border="1">
+
+                        <tr style="color:white;">
+
+                            <th>ID</th>
+
+                            <th>日期</th>
+
+                            <th>金額</th>
+
+                            <th>操作</th>
+
+                        </tr>
+
+                        <tr style="color:white;  visibility: hidden;">
+
+                            <td>{{ record.id }}</td>
+
+                            <td>{{ record.date }}</td>
+
+                            <td>{{ record.amount }}</td>
+
+                            <td>
+
+                                <a href="{{ url_for('edit_record', record_id=record.id) }}">編輯</a>
+
+                                <a href="{{ url_for('delete_record', record_id=record.id) }}">刪除</a>
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </t1>
+
+                <spacer class="col-sm-3"></spacer>
+
+            </bodyin>
+
+            <spacer class="col-sm-1"></spacer>
+
+        </div>
+
+    </div>
+
 </body>
+
 </html>
+
