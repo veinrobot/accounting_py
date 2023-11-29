@@ -8,7 +8,11 @@ records = [
     {'id': 2, 'date': '2023-11-14', 'amount': 30},
     {'id': 3, 'date': '2023-11-13', 'amount': 20}
 ]
+pre_records = [
+    {'id': 1, 'date': '2023-12-31', 'amount': 30000, 'types': '收入'}
+]
 next_id = 4
+next_pid = 2
 
 # 首頁，顯示所有記錄
 @app.route('/')
@@ -45,6 +49,22 @@ def delete_record(record_id):
     global records
     records = [r for r in records if r['id'] != record_id]
     return redirect(url_for('index'))
+
+@app.route('/chart')
+def chart():
+    return render_template('chart.html')
+
+@app.route('/add_pre_record', methods=['POST'])
+def add_pre_record():
+    global next_pid
+    date = request.form['date']
+    amount = float(request.form['amount'])
+    types = '收入' if request.form['modalRadio'] == 'incomeModal' else '支出'
+
+    pre_records.append({'id': next_id, 'date': date, 'amount': amount, 'types': types})
+    next_pid += 1
+
+    return redirect(url_for('chart'))
 
 if __name__ == '__main__':
     app.run(debug=True)
