@@ -1,18 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for
+import datetime
 
 app = Flask(__name__)
 
 # 記帳資料庫，用於存放記錄
 records = [
-    {'id': 1, 'date': '2023-11-15', 'amount': 50},
-    {'id': 2, 'date': '2023-11-14', 'amount': 30},
-    {'id': 3, 'date': '2023-11-13', 'amount': 20}
+    {'id': 1, 'date': '2023-11-15', 'amount': 50, 'types': '收入'},
+    {'id': 2, 'date': '2023-11-14', 'amount': 30, 'types': '收入'},
+    {'id': 3, 'date': '2023-11-13', 'amount': 20, 'types': '支出'}
 ]
-pre_records = [
-    {'id': 1, 'date': '2023-12-31', 'amount': 30000, 'types': '收入'}
-]
+pre_records = {'income': [0,0,0,0], 'spend': [0,0,0,0]}
 next_id = 4
-next_pid = 2
 
 # 首頁，顯示所有記錄
 @app.route('/')
@@ -26,7 +24,7 @@ def add_record():
     date = request.form['date']
     amount = float(request.form['amount'])
 
-    records.append({'id': next_id, 'date': date, 'amount': amount})
+    records.append({'id': next_id, 'date': date, 'amount': amount, 'types': '收入'})
     next_id += 1
 
     return redirect(url_for('index'))
@@ -52,18 +50,19 @@ def delete_record(record_id):
 
 @app.route('/chart')
 def chart():
-    return render_template('chart.html')
+    return render_template('chart.html', records = records, pre_records = pre_records)
 
 @app.route('/add_pre_record', methods=['POST'])
 def add_pre_record():
-    global next_pid
-    date = request.form['date']
-    amount = float(request.form['amount'])
-    types = '收入' if request.form['modalRadio'] == 'incomeModal' else '支出'
-
-    pre_records.append({'id': next_id, 'date': date, 'amount': amount, 'types': types})
-    next_pid += 1
-
+    types = request.form['modalRadio']
+    day = request.form['Damount']
+    week = request.form['Wamount']
+    month = request.form['Mamount']
+    year = request.form['Yamount']
+    if day != "": pre_records[types][0] = float(day)
+    if week != "": pre_records[types][1] = float(week)
+    if month != "": pre_records[types][2] = float(month)
+    if year != "": pre_records[types][3] = float(year)
     return redirect(url_for('chart'))
 
 if __name__ == '__main__':
