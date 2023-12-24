@@ -195,7 +195,6 @@
       var pre_records = {{pre_records|tojson}};
       var incomes = pre_records.income;
       var spends = pre_records.spend;
-      console.log(records);
       var chartData = getData(records);
       words('daily', chartData.ia[0], chartData.sa[0], incomes[0], spends[0]);
       words('weekly', chartData.ia[1], chartData.sa[1], incomes[1], spends[1]);
