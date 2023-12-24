@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>登入</title>
+    <title>註冊</title>
 </head>
 <body>
-    <h1>登入</h1>
+    <h1>註冊</h1>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul>
@@ -21,6 +21,6 @@
         {{ form.password.label }} {{ form.password }}<br><br>
         {{ form.submit }}
     </form>
-    <p>還沒有帳戶？<a href="{{ url_for('register') }}">註冊</a></p>
+    <p>已經有帳戶？<a href="{{ url_for('login') }}">登入</a></p>
 </body>
 </html>
