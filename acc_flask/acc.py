@@ -94,16 +94,20 @@ def check_login():
     if request.endpoint not in allowed_routes and not current_user.is_authenticated:
         return redirect(url_for('login'))
 
+def get_user_records()->list:
+    user_records = records.get(current_user.id)
+    if user_records == None:
+        user_records = []
+        records[current_user.id] = []
+    return user_records
+
 # 首頁，顯示所有記錄
 # 登入後才能進入的頁面
 @app.route('/')
 @login_required
 def index():
     # user_records = [record for record in records if record['user_id'] == current_user.id]
-    user_records = records.get(current_user.id)
-    if user_records == None:
-        user_records = []
-        records[current_user.id] = []
+    user_records = get_user_records()
     return render_template('index.html', records=user_records)
 
 @app.route('/add_record', methods=['POST'])
@@ -157,9 +161,10 @@ def add_pre_record():
     if year != "": pre_records[types][3] = float(year)
     return redirect(url_for('chart'))
 
-@app.route('/showdata', methods=['POST'])
+@app.route('/showdata')
 def showdata():
-    pass
+    user_records = get_user_records()
+    return render_template('showdata.html', records=user_records)
 
 @app.route('/edit', methods=['POST'])
 def edit():
