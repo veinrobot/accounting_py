@@ -1,0 +1,130 @@
+body {
+    height: 100%;
+    background-color: #03045E;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.bodytop{
+    background-color: #03045E;
+    color: white;
+}
+.pinchart{
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: #023E8A;
+}
+.bodyin {
+    margin-top: 20px;
+    background-color: #03045E;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.headl,
+.headr {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.menu {
+    background-color: #0096C7;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.menu {
+    margin-left: 20px;
+}
+
+.b1 {
+    background-color: #023E8A;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px; /* Adjust the margin as needed */
+}
+
+.button-container button {
+    background-color: #0096C7;
+    color: white;
+    width: 100px;
+    margin-left: 15px;
+    margin-bottom: 5px; /* Adjust the margin between buttons as needed */
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+label {
+    color: white;
+    margin-bottom: 5px;
+    display: block;
+    text-align: center;
+    font-size: 25px;
+}
+
+input {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+input[type="number"]{
+    color:black;
+}
+input[type="date"] {
+    width: 50%;
+    color:black;
+}
+
+input[type="submit"],
+button {
+    background-color: #0096C7;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover,
+button:hover {
+    background-color: #007396;
+}
+
+#t1 {
+    display: none;
+}
+
+#t1 table {
+    width: 90%;
+}
+
+.t1 table {
+    width: 80%;
+}
+
+.t1 th,
+.t1 td {
+    text-align: center;
+}

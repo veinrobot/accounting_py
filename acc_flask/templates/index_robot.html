@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>記帳</title>
+    
+        
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row bodyin">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6 b1">
+                <form action="{{ url_for('add_record') }}" method="post">
+                    <label for="date" >日期：</label>
+                    <input type="date" id="date" name="date" required>
+                    <label for="amount">金額：</label>
+                    <input type="number" id="amount" name="amount" required>
+                    <input type="submit" value="新增">
+                </form>
+                <a href="{{ url_for('showdata') }}">
+                    <button class="showbutton" name="displaybutton" onclick="t1.style.display='block'" >顯示紀錄</button>
+                </a>
+                <a href="{{ url_for('chart') }}">
+                    <button class="showbutton" name="charbutton" onclick="t1.style.display='block'" >顯示圖表</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
