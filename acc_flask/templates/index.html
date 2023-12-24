@@ -52,8 +52,9 @@
             margin-top: 10px;
         }
 
-        .menu {
+        .logout {
             margin-left: 20px;
+            margin-top: 10px;
         }
 
         .b1 {
@@ -68,7 +69,7 @@
             margin-top: 30px; /* Adjust the margin as needed */
         }
     
-        .button-container button {
+        .button-container a {
             background-color: #0096C7;
             color: white;
             width: 100px;
@@ -138,7 +139,7 @@
     <div class="container-fluid">
         <div class="row bodytop">
             <div class="col-xs-6 headl">
-                <button class="menu">Menu</button>
+                <button class="logout">登出</button>
             </div>
         </div>
         <div class="row bodyin">
@@ -153,13 +154,12 @@
 
                         <input type="submit" value="新增">
                         <button class="showbutton" name="displaybutton" onclick="t1.style.display='block'">顯示紀錄</button>
-                        <div class="button-container">
-                            <button class="btn btn-default">紀錄收支</button>
-                            <button class="btn btn-default">預算管理</button>
-                            <button class="btn btn-default">編輯分類</button>
-                            <button class="btn btn-default">檔案管理</button>
-                        </div>
                     </form>
+                    <div class="button-container">
+                        <a href="{{ url_for('showdata') }}" class="btn btn-default">顯示紀錄</a>
+                        <a href="{{ url_for('chart') }}" class="btn btn-default">顯示圖表</a>
+                        <a href="{{ url_for('edit') }}" class="btn btn-default">編輯分類</a>
+                    </div>
                 </div>
             </div>
         </div>

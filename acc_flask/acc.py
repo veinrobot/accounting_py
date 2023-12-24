@@ -161,5 +161,9 @@ def add_pre_record():
 def showdata():
     pass
 
+@app.route('/edit', methods=['POST'])
+def edit():
+    pass
+
 if __name__ == '__main__':
     app.run(debug=True)
