@@ -83,9 +83,10 @@ def logout():
 
 ## 記帳系統
 # 記帳資料庫，用於存放記錄
-records = {}
+records = {1: [{'id': 1, 'date': '2023-12-24', 'amount': 244.0, 'types': '收入', 'user_id': 1, 'categories': '工資', 'notes': '一月份薪水'}, 
+               {'id': 2, 'date': '2023-12-24', 'amount': 50.0, 'types': '支出', 'user_id': 1, 'categories': '食物', 'notes': '午餐'}]}
 pre_records = {'income': [0,0,0,0], 'spend': [0,0,0,0]}
-next_id = 4
+next_id = 3
 login = False
 
 @app.before_request
@@ -117,18 +118,17 @@ def add_record():
     date = request.form['date']
     amount = float(request.form['amount'])
 
-    new_record = {'id': next_id, 'date': date, 'amount': amount, 'types': '收入', 'user_id': current_user.id}
+    new_record = {'id': next_id, 'date': date, 'amount': amount, 'types': '收入', 'user_id': current_user.id, 'categories': '工資', 'notes': '一月份薪水'}
     if records.get(current_user.id) == None:
         records[current_user.id] = []
     records[current_user.id].append(new_record)
     next_id += 1
-
     return redirect(url_for('index'))
 
 @app.route('/edit_record/<int:record_id>', methods=['GET', 'POST'])
 @login_required
 def edit_record(record_id):
-    record = next((r for r in records if r['id'] == record_id and r['user_id'] == current_user.id), None)
+    record = next((r for r in records[current_user.id] if r['id'] == record_id and r['user_id'] == current_user.id), None)
     if record:
         if request.method == 'POST':
             record['date'] = request.form['date']
@@ -146,7 +146,8 @@ def delete_record(record_id):
 
 @app.route('/chart')
 def chart():
-    return render_template('chart.html', records = records, pre_records = pre_records)
+    user_records = get_user_records()
+    return render_template('chart.html', records = user_records, pre_records = pre_records)
 
 @app.route('/add_pre_record', methods=['POST'])
 def add_pre_record():
