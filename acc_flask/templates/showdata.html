@@ -6,117 +6,115 @@
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
-      background-color: #f7f7f7;
+      background-color: #15244C; /* Dark blue background */
+      color: #CAF0F8; /* White text */
     }
     h2 {
       text-align: center;
-      color: #333;
+      color: #CAF0F8; /* Blue header text */
     }
     table {
       width: 90%;
       border-collapse: collapse;
       margin: 20px auto;
+      background-color: #0F3066; /* Dark blue table background */
+      color: #CAF0F8; /* White text for table content */
     }
     th, td {
-      border: 1px solid #000;
+      border: 1px solid #1E90FF; /* Blue border */
       padding: 8px;
       text-align: center;
     }
     th {
-      background-color: #f2f2f2;
+      background-color: #023E8A; /* Dark blue header background */
     }
     tr:nth-child(even) {
-      background-color: #e6e6e6;
+      background-color: #0F3066; /* Dark blue alternate rows */
     }
     form {
       margin-bottom: 20px;
       text-align: center;
+      color: #CAF0F8; /* Blue form label */
     }
     label {
       margin-right: 5px;
-      color: #333;
+      color: #CAF0F8; /* Blue label text */
     }
     input[type="date"],
     select {
       padding: 8px;
       margin-right: 10px;
       border-radius: 5px;
-      border: 1px solid #ccc;
+      border: 1px solid #1E90FF; /* Blue border for inputs */
+      background-color: #0F3066; /* Dark blue input background */
+      color: #CAF0F8; /* White text for inputs */
     }
     input[type="submit"] {
       padding: 8px 15px;
-      background-color: #122bca;
-      color: white;
+      background-color: #1E90FF; /* Blue submit button */
+      color: #CAF0F8;
       border: none;
       cursor: pointer;
       border-radius: 5px;
     }
     input[type="submit"]:hover {
-      background-color: #0a1974;
-    }
-    #downloadLink {
-      display: inline-block;
-      padding: 8px 15px;
-      margin: 20px auto;
-      text-align: center;
-      background-color: #122bca;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-    #downloadLink:hover {
-      background-color: #0a1974;
+      background-color: #0C5FA3; /* Darker blue hover color */
     }
     .selShow{
-      margin:0 auto;
+      margin: 0 auto;
+      color: #CAF0F8; /* Blue select option text */
+    }
+    .btn {
+      padding: 8px 15px;
+      background-color: #1E90FF; /* Blue button */
+      color: #CAF0F8;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background-color: #0C5FA3; /* Darker blue hover color */
     }
   </style>
-  <script>
-    var a1=["收入","支出"];
-    var a2=[100,50];
-    var a3=["工資","食物"];
-    var a4=["一月份薪水","午餐"];
-    function show(){
-        var table = document.getElementById("tody");
-        console.log("inc function");
-        for(i=0;i<a1.length;i++){
-            let row = document.createElement("tr");
-            let c1 = document.createElement("td");
-            let c2 = document.createElement("td");
-            let c3 = document.createElement("td");
-            let c4 = document.createElement("td");
-            console.log(a1[i]);
-            console.log(a2[i]);
-            console.log(a3[i]);
-            console.log(a4[i]);
-            c1.innerText = a1[i];
-            c2.innerText = a2[i];
-            c3.innerText = a3[i];
-            c4.innerText = a4[i];
-            row.appendChild(c1);
-            row.appendChild(c2);
-            row.appendChild(c3);
-            row.appendChild(c4);
-            table.appendChild(row);
-        }
-    }
-  </script>
 </head>
 <body>
 
 <h2>收支表格</h2>
-<div id="selShow">
-<label for="showDateStart">起始日期：</label>
-<input type="date" id="showDateStart" name="showDateStart">
-<label for="showDateEnd">結束日期：</label>
-<input type="date" id="showDateEnd" name="showDateEnd">
-<div></div>
+
+<form id="filterForm">
+    <label for="startDate">起始日期：</label>
+    <input type="date" id="startDate" name="startDate">
+  
+    <label for="endDate">結束日期：</label>
+    <input type="date" id="endDate" name="endDate">
+    <br>
+    <label for="transactionType">收支類型：</label>
+    <select id="transactionType" name="transactionType">
+      <option value="all">全部</option>
+      <option value="收入">收入</option>
+      <option value="支出">支出</option>
+    </select>
+  
+    <label for="category">分類：</label>
+    <select id="category" name="category">
+      <option value="all">全部</option>
+      <option value="食物">食物</option>
+      <option value="住房">住房</option>
+      <option value="交通">交通</option>
+      <!-- 添加更多的分類選項 -->
+    </select>
+  </form>
+
 <table id="transactionTable">
   <thead>
+    <th>日期</th>
     <th>收支</th>
     <th>金額</th>
     <th>分類</th>
     <th>事由</th>
+    <th>修改</th>
   </thead>
   <tbody id="tody">
 
@@ -124,35 +122,73 @@
   <!-- 表格中的数据 -->
 </table>
 
-<form id="filterForm">
-  <label for="startDate">起始日期：</label>
-  <input type="date" id="startDate" name="startDate">
-
-  <label for="endDate">結束日期：</label>
-  <input type="date" id="endDate" name="endDate">
-  <br>
-  <label for="transactionType">收支類型：</label>
-  <select id="transactionType" name="transactionType">
-    <option value="all">全部</option>
-    <option value="income">收入</option>
-    <option value="expense">支出</option>
-  </select>
-
-  <label for="category">分類：</label>
-  <select id="category" name="category">
-    <option value="all">全部</option>
-    <option value="food">食物</option>
-    <option value="housing">住房</option>
-    <option value="transportation">交通</option>
-    <!-- 添加更多的分類選項 -->
-  </select>
-</form>
-<button onclick="show()">篩選</button>
-<a id="downloadLink" href="#" download="transactions.csv">下載</a>
+<button onclick="show()" class = "btn">篩選</button>
+<a id="downloadLink" href="#" download="transactions.csv" class = "btn">下載</a>
 
 <script>
-  // JavaScript代码将在此处添加，用于表格过滤和生成CSV文件下载
+    var records = {{records|tojson}};
+    var table = document.getElementById("tody");
+    var formattedDate =  new Intl.DateTimeFormat("fr-CA", {year: "numeric", month: "2-digit", day: "2-digit"}).format(new Date());
+    document.getElementById("startDate").value = formattedDate;
+    document.getElementById("endDate").value = formattedDate;
+    table.innerHTML = '';
+    (function () {
+        show();
+      })()
+    function show() {
+        var start = document.getElementById("startDate").value;
+        var end = document.getElementById("endDate").value;
+        var cate = document.getElementById("category").value;
+        var type = document.getElementById("transactionType").value;
+        var table = document.getElementById("tody");
+        table.innerHTML = ''; // Clear table content
+        for (i = 0; i < records.length; i++) {
+            if(filter([start, end, type, cate], records[i])){
+              let row = document.createElement("tr");
+              let c0 = document.createElement("td");
+              let c1 = document.createElement("td");
+              let c2 = document.createElement("td");
+              let c3 = document.createElement("td");
+              let c4 = document.createElement("td");
+
+              c0.innerText = records[i].date;
+              c1.innerText = records[i].types;
+              c2.innerText = records[i].amount;
+              c3.innerText = records[i].categories;
+              c4.innerText = records[i].notes;
+
+              row.appendChild(c0);
+              row.appendChild(c1);
+              row.appendChild(c2);
+              row.appendChild(c3);
+              row.appendChild(c4);
+
+              let button = document.createElement("a");
+              button.innerText = "修改";
+              button.href = "/edit_record/" + records[i].id
+              button.role = "button";
+              button.className = "btn";
+
+              let buttonCell = document.createElement("td");
+              buttonCell.appendChild(button); 
+              row.appendChild(buttonCell);
+
+              table.appendChild(row);
+            }
+        }
+    }
+    function filter(f, record){
+      console.log(f, record);
+      var a = new Date(f[0]);
+      var b = new Date(f[1]);
+      var c = new Date(record.dates);
+      if(c < a || c > b) return false;
+      if(f[2] != record.types && f[2] != 'all') return false;
+      if(f[3] != record.categories && f[3] != 'all') return false;
+      return true;
+    }
 </script>
+
 
 </body>
 </html>
