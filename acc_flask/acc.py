@@ -167,5 +167,10 @@ def showdata():
     user_records = get_user_records()
     return render_template('showdata.html', records=user_records)
 
+@app.route('/edit', methods=['POST'])
+def edit():
+    pass
+
+
 if __name__ == '__main__':
     app.run(debug=True)
