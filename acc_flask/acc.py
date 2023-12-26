@@ -7,6 +7,26 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret_key'
+
+# 檔案名稱
+users_file_name = "users_data.pkl"
+records_file_name = "records.json"
+
+# 紀錄存檔讀檔系統
+import json
+
+def save_to_json(filename, data):
+    with open(filename, 'w') as file:
+        json.dump(data, file)
+
+def load_from_json(filename, default_value={}):
+    try:
+        with open(filename, 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print(f"File '{filename}' not found. Returning default value.")
+        return default_value
+
 # 登入系統
 # 使用者帳戶資料
 class User(UserMixin):
@@ -15,11 +35,24 @@ class User(UserMixin):
         self.username = username
         self.password = password
 
-# 假設已經有一些用戶
 users = [
-    User(1, 'zzzz', 'zzzzzz'),
-    User(2, 'user2', 'password2')
+    # User(1, 'zzzz', 'zzzzzz'),
+    # User(2, 'user2', 'password2')
 ]
+
+# 使用者存檔讀檔
+import pickle
+def save_users_to_file(filename, users_list):
+    with open(filename, 'wb') as file:
+        pickle.dump(users_list, file)
+
+def load_users_from_file(filename, default_value=None):
+    try:
+        with open(filename, 'rb') as file:
+            return pickle.load(file)
+    except FileNotFoundError:
+        print(f"File '{filename}' not found. Returning default value.")
+        return default_value
 
 # 使用者身份驗證
 login_manager = LoginManager()
@@ -66,6 +99,7 @@ def register():
         password = form.password.data
         user = User(len(users) + 1, username, password)
         users.append(user)
+        save_users_to_file(users_file_name, users)
         flash('註冊成功，請登入', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
@@ -78,14 +112,15 @@ def logout():
     flash('已登出', 'success')
     return redirect(url_for('login'))
 
-
-
-
 ## 記帳系統
 # 記帳資料庫，用於存放記錄
-records = {1: [{'id': 1, 'date': '2023-12-24', 'amount': 244.0, 'types': '收入', 'user_id': 1, 'categories': '工資', 'notes': '一月份薪水'}, 
-               {'id': 2, 'date': '2023-12-24', 'amount': 50.0, 'types': '支出', 'user_id': 1, 'categories': '食物', 'notes': '午餐'}]}
-pre_records = {'income': [0,0,0,0], 'spend': [0,0,0,0]}
+records = {
+    # 1: [{'id': 1, 'date': '2023-12-24', 'amount': 244.0, 'types': '收入', 'user_id': 1, 'categories': '工資', 'notes': '一月份薪水'}, 
+    # {'id': 2, 'date': '2023-12-24', 'amount': 50.0, 'types': '支出', 'user_id': 1, 'categories': '食物', 'notes': '午餐'}]
+    }
+pre_records = {
+    'income': [0,0,0,0], 'spend': [0,0,0,0]
+    }
 next_id = 3
 login = False
 
@@ -122,6 +157,7 @@ def add_record():
     if records.get(current_user.id) == None:
         records[current_user.id] = []
     records[current_user.id].append(new_record)
+    save_to_json(records_file_name, records)
     next_id += 1
     return redirect(url_for('index'))
 
@@ -133,6 +169,7 @@ def edit_record(record_id):
         if request.method == 'POST':
             record['date'] = request.form['date']
             record['amount'] = float(request.form['amount'])
+            save_to_json(records_file_name, records)
             return redirect(url_for('index'))
         return render_template('edit.html', record=record)
     return 'Record not found', 404
@@ -142,6 +179,7 @@ def edit_record(record_id):
 def delete_record(record_id):
     global records
     records = [r for r in records if r['id'] != record_id or r['user_id'] != current_user.id]
+    save_to_json(records_file_name, records)
     return redirect(url_for('index'))
 
 @app.route('/chart')
@@ -171,6 +209,7 @@ def showdata():
 def edit():
     pass
 
-
 if __name__ == '__main__':
+    records = load_from_json(records_file_name, dict())
+    users = load_users_from_file(users_file_name, [])
     app.run(debug=True)
