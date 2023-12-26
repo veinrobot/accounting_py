@@ -5,6 +5,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length
+from pyngrok import ngrok
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret_key'
 
@@ -210,6 +211,17 @@ def edit():
     pass
 
 if __name__ == '__main__':
+    port_number = 5000
+
+    ngrok_auth_key = "ngrok_key"
+    ngrok.set_auth_token(ngrok_auth_key)
+    public_url = ngrok.connect(port_number).public_url
+    print(" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:{}\"".format(public_url, port_number))
+
+    # load records
     records = load_from_json(records_file_name, dict())
     users = load_users_from_file(users_file_name, [])
-    app.run(debug=True)
+
+    app.run()
+    # app.run(debug=True)
+    # app.run('0.0.0.0', port=port_number, debug=True)
