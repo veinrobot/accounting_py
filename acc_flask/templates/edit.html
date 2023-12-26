@@ -35,7 +35,7 @@
             border: 1px solid #ccc;
             width: 90%;
         }
-        input[type="submit"] {
+        .btn, input[type="submit"] {
             padding: 10px 15px;
             background-color: #48CAE4; /* Blue submit button background */
             color: white;
@@ -43,8 +43,11 @@
             cursor: pointer;
             border-radius: 5px;
         }
-        input[type="submit"]:hover {
+        .btn:hover, input[type="submit"]:hover {
             background-color: #003366; /* Darker blue on hover */
+        }
+        .btn {
+            text-decoration: none;
         }
     </style>
 </head>
@@ -55,8 +58,8 @@
         <label for="date">日期：</label>
         <input type="date" id="date" name="date" value="{{ record.date }}" required><br><br>
 
-        <label for="transactionType">收支類型：</label>
-        <select id="transactionType" name="transactionType">
+        <label for="types">收支類型：</label>
+        <select id="types" name="types">
           {% if record.types == '收入' %}
           <option value="income" selected>收入</option>
           <option value="expense">支出</option>
@@ -76,6 +79,7 @@
         <input type="text" id="notes" name="notes"  value="{{ record.notes }}"><br><br>
 
         <input type="submit" value="儲存">
+        <a href="{{ url_for('delete_record', record_id=record.id) }}" class="btn btn-default me-5 px-4 px-sm-5" role="button">刪除</a>
     </form>
 </body>
 <script>
