@@ -19,6 +19,7 @@
         
         .container-fluid {
             padding: 0;
+            align:center;
         }
         
         .bodytop{
@@ -32,6 +33,9 @@
             background-color: #0096C7;
             width:10%;
             font-size:2rem;
+        }
+        .btn-add{
+            border-radius:10px;
         }
         .pinchart{
             margin-top: 20px;
@@ -80,7 +84,7 @@
         .button-container1 {
             display: flex;
             justify-content: center;
-            margin-top: 10px;
+            margin-top: 20px;
         }
         .button-container2 {
             display: flex;
@@ -137,6 +141,7 @@
             padding: 8px;
             margin-bottom: 10px;
             box-sizing: border-box;
+            border-radius:50px;
         }
         input[type="number"]{
             color:black;
@@ -195,6 +200,13 @@
         .t1 td {
             text-align: center;
         }
+        .error{
+            color:red;
+            margin-top: 5px;
+        }
+        .error-border {
+            border: 2px solid red;
+        }
         @media only screen and (max-width: 600px) {
             body {
                 height: 100%;
@@ -206,6 +218,7 @@
 
             .container-fluid {
                 padding: 0;
+                align:center;
             }
             .btn-logout {
                 margin-left: 30px; /* Adjust the margin as needed */
@@ -214,7 +227,7 @@
                 background-color: #0096C7;
                 width:15%;
                 font-size:1.5rem;
-                text-align:centar;
+                text-align:center;
             }
             .bodytop{
                 background-color: #03045E;
@@ -227,6 +240,8 @@
                 margin-right: auto;
                 background-color: #023E8A;
                 color: white;
+                width:85%;
+                align:center;
             }
 
             .headl,
@@ -267,7 +282,7 @@
             .button-container1 {
                 display: flex;
                 justify-content: center;
-                margin-top: 10px;
+                margin-top: 20px;
             }
             .button-container2 {
                 display: flex;
@@ -317,14 +332,17 @@
             input[type="date"] {
                 width: 50%;
                 color:black;
+                text-align:center;
             }
 
             input[type="number"] {
                 color:black;
+                text-align:center;
             }
 
             input[type="reason"]{
                 color:black;
+                text-align:center;
             }
 
             input[type="submit"],
@@ -375,14 +393,16 @@
                         <input type="date" id="date" name="date" required>
                         <label for="amount">金額：</label>
                         <input type="number" id="amount" name="amount" required>
+                        <div id="amountError" class="error"></div>
                         <label for="category">分類：</label>
                         <select id="category" name="category">
                             <option value="category1">Category 1</option>
                             <option value="category2">Category 2</option>
                         </select>
+                        <div id="catagoryError" class="error"></div>
                         <label for="reason">事由：</label>
                         <input type="reason" id="reason" name="reason">
-                        <input type="submit" value="新增">
+                        <input type="submit" value="新增" class="btn btn-default btn-add">
                     </form>
                     <div class="button-container1">
                         <a href="{{ url_for('showdata') }}" class="btn btn-default">顯示紀錄</a>
@@ -394,7 +414,34 @@
                 </div>
             </div>
         </div>
+        <script>
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').value = today;
+            function checkAmount() {
+                var enteredAmount = parseFloat(document.getElementById('amount').value);
+                var amountInput = document.getElementById('amount');
+                var amountErrorElement = document.getElementById('amountError');
+        
+                if (isNaN(enteredAmount) || enteredAmount < 0) {
+                    // Display an error message if the amount is negative or not a valid number
+                    amountErrorElement.innerHTML = '請輸入有效的非負數金額!';
+                    amountInput.classList.add('error-border');
+                    amountInput.value = '';
+                    return false;
+                }
+        
+                // Clear the error message if the amount is valid
+                amountErrorElement.innerHTML = '';
+                amountInput.classList.remove('error-border'); 
+                return true; 
+            }
+        
+            document.querySelector('form').addEventListener('submit', function (event) {
+                if (!checkAmount()) {
+                    event.preventDefault(); // Prevent the form from submitting if there are errors
+                }
+            });
+        </script>
     </div>
 </body>
-
 </html>
