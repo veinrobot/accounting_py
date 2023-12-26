@@ -180,7 +180,7 @@ def edit_record(record_id):
 @login_required
 def delete_record(record_id):
     global records
-    records[current_user.id] = [r for r in records if r['id'] != record_id or r['user_id'] != current_user.id]
+    records[current_user.id] = [r for r in records[current_user.id] if r['id'] != record_id or r['user_id'] != current_user.id]
     save_to_json(records_file_name, records)
     return redirect(url_for('index'))
 
@@ -223,6 +223,7 @@ if __name__ == '__main__':
 
     ngrok_key_file = "ngrok_key.txt"
     ngrok_auth_key = read_txt_file(ngrok_key_file).replace("\n", "").replace("\r", "")
+    print(ngrok_auth_key)
     if ngrok_auth_key!="":
         ngrok.set_auth_token(ngrok_auth_key)
         public_url = ngrok.connect(port_number).public_url
