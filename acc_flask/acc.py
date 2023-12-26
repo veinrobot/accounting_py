@@ -153,8 +153,11 @@ def add_record():
     global next_id
     date = request.form['date']
     amount = float(request.form['amount'])
+    types = request.form['types']
+    categories = request.form['categories']
+    notes = request.form['notes']
 
-    new_record = {'id': next_id, 'date': date, 'amount': amount, 'types': '收入', 'user_id': current_user.id, 'categories': '工資', 'notes': '一月份薪水'}
+    new_record = {'id': next_id, 'date': date, 'amount': amount, 'types': types, 'user_id': current_user.id, 'categories': categories, 'notes': notes}
     if records.get(current_user.id) == None:
         records[current_user.id] = []
     records[current_user.id].append(new_record)
@@ -170,6 +173,9 @@ def edit_record(record_id):
         if request.method == 'POST':
             record['date'] = request.form['date']
             record['amount'] = float(request.form['amount'])
+            record['types'] = request.form['types']
+            record['categories'] = request.form['categories']
+            record['notes'] = request.form['notes']
             save_to_json(records_file_name, records)
             return redirect(url_for('index'))
         return render_template('edit.html', record=record)
