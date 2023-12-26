@@ -171,10 +171,6 @@ def showdata():
 def edit():
     pass
 
-@app.route('/index_robot')
-def index_robot():
-    user_records = get_user_records()
-    return render_template('index_robot.html', records=user_records)
 
 if __name__ == '__main__':
     app.run(debug=True)
