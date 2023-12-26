@@ -9,7 +9,192 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style type="text/css">
+        body {
+            height: 100%;
+            background-color: #03045E;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
         
+        .container-fluid {
+            padding: 0;
+        }
+        
+        .bodytop{
+            background-color: #03045E;
+            color: white;
+        }
+        .btn-logout {
+            margin-left: 30px; 
+            margin-top: 20px;
+            color : white;
+            background-color: #0096C7;
+            width:10%;
+            font-size:2rem;
+        }
+        .pinchart{
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+            background-color: #023E8A;
+        }
+        .bodyin {
+            margin-top: 20px;
+            background-color: #03045E;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            width:80%;
+            align:center;
+        }
+        
+        .headl,
+        .headr {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+        
+        .menu {
+            background-color: #0096C7;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .menu {
+            margin-left: 20px;
+        }
+        
+        .b1 {
+            background-color: #023E8A;
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .button-container1 {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .button-container2 {
+            display: flex;
+            flex-direction:row;
+            justify-content: center;
+            margin-top: 10px;
+        }
+    
+        .button-container1 a {
+            background-color: #0096C7;
+            color: white;
+            align:center;
+            width:20%;
+            height:15%;
+            font-size:2rem;
+            margin-bottom: 5px; /* Adjust the margin between buttons as needed */
+            margin-left:30px;
+            margin-right:30px;
+            text-align:center;
+        }
+        .button-container2 a{
+            background-color: #0096C7;
+            color: white;
+            align:center;
+            width:20%;
+            height:15%;
+            font-size:2rem;
+            margin-bottom: 5px; /* Adjust the margin between buttons as needed */
+            margin-left:30px;
+            margin-right:30px;
+            text-align:center;
+        }
+        
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        label {
+            color: white;
+            margin-bottom: 5px;
+            display: block;
+            text-align: center;
+            font-size: 25px;
+        }
+
+        .logout {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        input {
+            width: 80%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        input[type="number"]{
+            color:black;
+        }
+        input[type="date"] {
+            width: 50%;
+            color:black;
+        }
+        input[type="reason"]{
+            color:black;
+        }
+        select {
+            width: 80%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            color: black; /* Adjust the color as needed */
+            background-color: #fff; /* Adjust the background color as needed */
+            border: 1px solid #ccc; /* Adjust the border color as needed */
+            border-radius: 4px; /* Adjust the border-radius as needed */
+        }
+        
+        select option {
+            color: black; /* Adjust the color as needed */
+            background-color: #fff; /* Adjust the background color as needed */
+        }
+        input[type="submit"],
+        button {
+            background-color: #0096C7;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #007396;
+        }
+        
+        #t1 {
+            display: none;
+        }
+        
+        #t1 table {
+            width: 90%;
+        }
+        
+        .t1 table {
+            width: 80%;
+        }
+        
+        .t1 th,
+        .t1 td {
+            text-align: center;
+        }
         @media only screen and (max-width: 600px) {
             body {
                 height: 100%;
@@ -22,7 +207,15 @@
             .container-fluid {
                 padding: 0;
             }
-
+            .btn-logout {
+                margin-left: 30px; /* Adjust the margin as needed */
+                margin-top: 20px;
+                color : white;
+                background-color: #0096C7;
+                width:15%;
+                font-size:1.5rem;
+                text-align:centar;
+            }
             .bodytop{
                 background-color: #03045E;
                 color: white;
@@ -30,8 +223,8 @@
 
             .bodyin {
                 margin-top: 20px;
-                margin-left: 20px;
-                margin-right: 20px;
+                margin-left: auto;
+                margin-right: auto;
                 background-color: #023E8A;
                 color: white;
             }
@@ -54,10 +247,7 @@
                 margin-top: 10px;
             }
 
-            .logout {
-                margin-left: 20px;
-                margin-top: 10px;
-            }
+            
 
             .logo{
                 position: fixed;
@@ -74,19 +264,34 @@
                 padding: 20px 0;
             }
 
-            .button-container {
+            .button-container1 {
                 display: flex;
-                flex-direction: column;
-                margin-top: 30px; /* Adjust the margin as needed */
+                justify-content: center;
+                margin-top: 10px;
+            }
+            .button-container2 {
+                display: flex;
+                flex-direction:row;
+                margin-top: 10px;
             }
         
-            .button-container a {
+            .button-container1 a {
                 background-color: #0096C7;
                 color: white;
-                width: 100px;
+                width:50%;
+                height:100%;
+                font-size:1.5rem;
                 align:center;
-                margin-left: 15px;
                 margin-bottom: 5px; /* Adjust the margin between buttons as needed */
+            }
+            .button-container2 a{
+                background-color: #0096C7;
+                color: white;
+                width:100%;
+                height:100%;
+                font-size:1.5rem;
+                align:center;
+                margin-bottom: 5%; /* Adjust the margin between buttons as needed */
             }
 
             form {
@@ -115,6 +320,10 @@
             }
 
             input[type="number"] {
+                color:black;
+            }
+
+            input[type="reason"]{
                 color:black;
             }
 
@@ -156,9 +365,7 @@
 <body>
     <div class="container-fluid">
         <div class="row bodytop">
-            <div class="col-xs-6 headl">
-                <button class="logout">登出</button>
-            </div>
+            <a href="{{ url_for('logout') }}" class="btn btn-default btn-logout">登出</a>
         </div>
         <div class="row bodyin">
             <div class="col-xs-12">
@@ -166,23 +373,26 @@
                     <form action="{{ url_for('add_record') }}" method="post">
                         <label for="date" >日期：</label>
                         <input type="date" id="date" name="date" required>
-
                         <label for="amount">金額：</label>
                         <input type="number" id="amount" name="amount" required>
-
+                        <label for="category">分類：</label>
+                        <select id="category" name="category">
+                            <option value="category1">Category 1</option>
+                            <option value="category2">Category 2</option>
+                        </select>
+                        <label for="reason">事由：</label>
+                        <input type="reason" id="reason" name="reason">
                         <input type="submit" value="新增">
-                        <button class="showbutton" name="displaybutton" onclick="t1.style.display='block'">顯示紀錄</button>
                     </form>
-                    <div class="button-container">
+                    <div class="button-container1">
                         <a href="{{ url_for('showdata') }}" class="btn btn-default">顯示紀錄</a>
+                    </div>
+                    <div class="button-container2">
                         <a href="{{ url_for('chart') }}" class="btn btn-default">顯示圖表</a>
                         <a href="{{ url_for('edit') }}" class="btn btn-default">編輯分類</a>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class-"row bottom">
-            <img src="{{ url_for('static', filename='img/logo.png') }}" class="logo" alt="...">
         </div>
     </div>
 </body>
