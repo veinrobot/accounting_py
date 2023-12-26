@@ -1,5 +1,6 @@
 # pip install Flask-Login Flask-WTF
 # pip install flask
+# pip install pyngrok
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
@@ -153,11 +154,8 @@ def add_record():
     global next_id
     date = request.form['date']
     amount = float(request.form['amount'])
-    types = request.form['types']
-    categories = request.form['categories']
-    notes = request.form['notes']
 
-    new_record = {'id': next_id, 'date': date, 'amount': amount, 'types': types, 'user_id': current_user.id, 'categories': categories, 'notes': notes}
+    new_record = {'id': next_id, 'date': date, 'amount': amount, 'types': '收入', 'user_id': current_user.id, 'categories': '工資', 'notes': '一月份薪水'}
     if records.get(current_user.id) == None:
         records[current_user.id] = []
     records[current_user.id].append(new_record)
@@ -173,9 +171,6 @@ def edit_record(record_id):
         if request.method == 'POST':
             record['date'] = request.form['date']
             record['amount'] = float(request.form['amount'])
-            record['types'] = request.form['types']
-            record['categories'] = request.form['categories']
-            record['notes'] = request.form['notes']
             save_to_json(records_file_name, records)
             return redirect(url_for('index'))
         return render_template('edit.html', record=record)
@@ -185,7 +180,7 @@ def edit_record(record_id):
 @login_required
 def delete_record(record_id):
     global records
-    records = [r for r in records if r['id'] != record_id or r['user_id'] != current_user.id]
+    records[current_user.id] = [r for r in records if r['id'] != record_id or r['user_id'] != current_user.id]
     save_to_json(records_file_name, records)
     return redirect(url_for('index'))
 
@@ -228,7 +223,6 @@ if __name__ == '__main__':
 
     ngrok_key_file = "ngrok_key.txt"
     ngrok_auth_key = read_txt_file(ngrok_key_file).replace("\n", "").replace("\r", "")
-    print(ngrok_auth_key)
     if ngrok_auth_key!="":
         ngrok.set_auth_token(ngrok_auth_key)
         public_url = ngrok.connect(port_number).public_url
